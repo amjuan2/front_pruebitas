@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="./style/index.css">
+<link rel="stylesheet"
+	href="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://unpkg.com/bootstrap-table@1.13.4/dist/bootstrap-table.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+	integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+	integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+	crossorigin="anonymous"></script>
+<title>Consultas</title>
+<link rel="shortcut icon" href="img/favicon.ico"> 
+</head>
+<script type="text/javascript">
+$(document).ready(function() {
+	var doctores = [{
+	    field: 'id',
+	    title: 'Id doctor'
+	  }, {
+	    field: 'nombre',
+	    title: 'Nombre'
+	  }, {
+	    field: 'edad',
+	    title: 'Edad'
+	  }, {
+	    field: 'sexo',
+	    title: 'Sexo'
+	  },{   
+		field:'experiencia',
+		title: 'Experiencia'
+	  }];
+	
+	var citas = [{
+	    field: 'id',
+	    title: 'Id cita'
+	  }, {
+	    field: 'doctor',
+	    title: 'Doctor'
+	  }, {
+	    field: 'cuarto',
+	    title: 'Consultorio'
+	  }, {
+	    field: 'hora',
+	    title: 'Hora de la cita'
+	  },{   
+		field:'paciente',
+		title: 'Paciente'
+	  },{   
+		field:'fecha',
+		title: 'Fecha'
+	  }];
+	
+	var pacientes = [{
+	    field: 'id',
+	    title: 'Id paciente'
+	  }, {
+	    field: 'nombre',
+	    title: 'Nombre'
+	  }, {
+	    field: 'edad',
+	    title: 'Edad'
+	  }, {
+	    field: 'telefono',
+	    title: 'Telefono'
+	  }];
+	
+	var cuartos = [{
+	    field: 'id',
+	    title: 'Id consultorio'
+	  }, {
+	    field: 'nombre',
+	    title: 'Nombre'
+	  }, {
+	    field: 'ubicacion',
+	    title: 'Ubicación'
+	  }, {
+	    field: 'reserva',
+	    title: 'Reserva'
+	  }];
+	
+	
+		function verCitas(){
+			var xhttp = new XMLHttpRequest();
+			 	
+			xhttp.open("GET", "http://localhost:8080/citas/listar", false);
+			xhttp.send();
+			var obj =$.parseJSON(xhttp.responseText);
+			console.log(obj);
+			mostrarTabla(obj, citas, '#table');
+		}
+		
+		verCitas();
+		
+		function verDoctores(){
+			var xhttp = new XMLHttpRequest();
+			 	
+			xhttp.open("GET", "http://localhost:8080/doctores/listar", false);
+			xhttp.send();
+			var obj =$.parseJSON(xhttp.responseText);
+			console.log(obj);
+			mostrarTabla(obj, doctores, '#table2');
+		}
+		
+		verDoctores();
+		
+		function verPacientes(){
+			var xhttp = new XMLHttpRequest();
+			 	
+			xhttp.open("GET", "http://localhost:8080/pacientes/listar", false);
+			xhttp.send();
+			var obj =$.parseJSON(xhttp.responseText);
+			console.log(obj);
+			mostrarTabla(obj, pacientes, '#table3');
+		}
+		
+		verPacientes();
+		
+		function verCuartos(){
+			var xhttp = new XMLHttpRequest();
+			 	
+			xhttp.open("GET", "http://localhost:8080/cuartos/listar", false);
+			xhttp.send();
+			var obj =$.parseJSON(xhttp.responseText);
+			console.log(obj);
+			mostrarTabla(obj, cuartos, '#table4');
+		}
+		
+		verCuartos();
+})
+
+
+
+function mostrarTabla(mydata, campos, tabla){
+	console.log(mydata);
+	console.log(campos);
+	$(tabla).bootstrapTable({
+		  columns: campos,
+		  data: mydata
+		})
+}
+</script>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+		<div class="container">
+			<a class="navbar-brand" style="color: #fff"><img
+				src="./img/pills.png">&nbsp;&nbsp;&nbsp;&nbsp;¡Base de datos!</a>
+		</div>
+		<form class="my-2 my-lg-0">
+		<a href="Citas.html" style="color: red; font-size: 15px">Volver</a>
+    </form>
+	</nav>
+	<div class="container mt-3">
+  			<div class="main-wrap">
+			<table id="table" class="table table-danger"></table>
+			</div>
+  		</div>
+  		<div class="container mt-3">
+  			<div class="main-wrap">
+			<table id="table2" class="table table-primary"></table>
+			</div>
+  		</div>
+  		<div class="container mt-3">
+  			<div class="main-wrap">
+			<table id="table3" class="table table-success"></table>
+			</div>
+  		</div>
+  		<div class="container my-3">
+  			<div class="main-wrap">
+			<table id="table4" class="table table-warning"></table>
+			</div>
+  		</div>
+</body>
+</html>
